@@ -237,6 +237,15 @@ async def handle(cr, cw):
         await cw.drain()
         try: sr, sw = await asyncio.open_connection(SSH_HOST, SSH_PORT)
         except: cw.close(); active -= 1; return
+        idx = payload.find(b"\r\n\r\n")
+        if idx != -1 and len(payload) > idx + 4:
+            sw.write(payload[idx+4:])
+            await sw.drain()
+        elif b"\n\n" in payload:
+            idx2 = payload.find(b"\n\n")
+            if idx2 != -1 and len(payload) > idx2 + 2:
+                sw.write(payload[idx2+2:])
+                await sw.drain()
         await asyncio.gather(pipe(cr, sw), pipe(sr, cw))
     except: pass
     finally:
