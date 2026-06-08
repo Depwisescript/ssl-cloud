@@ -51,11 +51,11 @@ frontend multiport_frontend
 
 backend recir_https_backend
     mode tcp
-    server recir_https_server abns@haproxy-https send-proxy-v2 check
+    server recir_https_server abns@haproxy-https send-proxy-v2
 
 backend recir_http_backend
     mode tcp
-    server recir_http_server abns@haproxy-http send-proxy-v2 check
+    server recir_http_server abns@haproxy-http send-proxy-v2
 
 frontend multiports_frontend
     mode tcp
