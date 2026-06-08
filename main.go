@@ -180,10 +180,8 @@ func InstallSSLTunnel(port string) error {
 		return fmt.Errorf("fallo escribir haproxy.cfg: %v", err)
 	}
 
-	if exec.Command("systemctl", "is-active", "--quiet", "ssh-ws-internal.service").Run() != nil {
-		log.Println("Instalando ssh-ws-internal...")
-		installSSHWSInternal()
-	}
+	log.Println("Instalando/Actualizando ssh-ws-internal...")
+	installSSHWSInternal()
 
 	EnsureHAProxyResilience()
 
